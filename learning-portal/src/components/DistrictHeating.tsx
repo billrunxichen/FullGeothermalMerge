@@ -52,9 +52,9 @@ export function DistrictHeating() {
       id: 'gen',
       icon: Network,
       title: 'Geothermal Energy Network (GEN)',
-      type: 'De-centralized',
-      description: 'Fifth-generation networked system',
-      details: 'A de-centralized system where multiple buildings act as both sources and sinks, feeding into and drawing from the energy network. This configuration has NO centralized facility, but instead has multiple distributed sources of heating and cooling networked together.',
+      type: 'Decentralized',
+      description: 'Fifth generation district heating and cooling system',
+      details: 'A decentralized system where connected buildings can exchange low-temperature heat. It is called a geothermal energy network because shallow boreholes provide geothermal energy storage: the ground can store and release thermal energy as the network balances heating and cooling.',
       color: 'from-purple-400 to-pink-500',
       benefits: ['No central facility needed', 'Buildings share energy', 'Maximum flexibility'],
       isGeothermal: true,
@@ -64,9 +64,9 @@ export function DistrictHeating() {
       id: 'ten',
       icon: Users,
       title: 'Thermal Energy Network (TEN)',
-      type: 'De-centralized',
-      description: 'Broader networked system',
-      details: 'If the equipment draws from wastewater or ventilation heat, it can be called a Thermal Energy Network (TEN) more generally. Similar to GEN but can use various thermal sources.',
+      type: 'Decentralized',
+      description: 'GEN-like network with additional thermal sources',
+      details: 'Like a GEN, a TEN can use a decentralized network that connects buildings and balances heating and cooling. A TEN expands the possible thermal sources beyond shallow boreholes to include wastewater, ventilation exhaust, and commercial or industrial waste heat.',
       color: 'from-indigo-400 to-blue-500',
       benefits: ['Multiple heat sources', 'Waste heat recovery', 'Flexible configuration'],
       isNetwork: true
@@ -95,7 +95,7 @@ export function DistrictHeating() {
             <p className="text-slate-700 leading-relaxed">
               Instead of only transforming an individual home, we can also implement <strong>heating and cooling systems 
               that share resources across multiple buildings</strong>. These systems deliver energy across a network and can 
-              be either centralized (with one main facility) or de-centralized (with distributed sources).
+              be either centralized (with one main facility) or decentralized (with distributed sources).
             </p>
           </div>
         </motion.div>
@@ -230,18 +230,32 @@ export function DistrictHeating() {
                   is centralized in one location.
                 </p>
                 <p className="leading-relaxed">
-                  <strong>De-centralized systems</strong> (GEN, TEN) are "fifth-generation" networks where multiple buildings 
-                  act as both sources and sinks, feeding into and drawing from the network. There is <strong>NO centralized 
-                  facility</strong>—instead, multiple distributed sources are networked together.
+                  <strong>Decentralized systems</strong> (GEN, TEN) are fifth-generation district heating and cooling systems
+                  that can exchange low-temperature heat among connected buildings and thermal resources. Rather than relying
+                  on one plant to serve every building, they use distributed heat pumps, boreholes, and—depending on the system—other sources.
                 </p>
                 <div className="bg-white/50 p-4 rounded-lg mt-4">
                   <p className="text-sm font-semibold text-orange-800">
-                    These are NOT the same—the key difference is centralization vs. distribution of energy sources.
+                    These are not the same—the key difference is whether one central source supplies the network or distributed sources and sinks are connected across it.
                   </p>
                 </div>
               </div>
             </div>
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-8 rounded-2xl border-2 border-teal-200 bg-gradient-to-r from-teal-50 to-sky-50 p-8"
+        >
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-700">Terminology bridge</p>
+          <h3 className="mt-2 text-2xl font-bold text-slate-800">Geothermal names the resource; district heating and cooling names the configuration.</h3>
+          <p className="mt-3 max-w-4xl leading-relaxed text-slate-700">
+            <strong>Geothermal</strong> identifies the ground-based thermal resource or storage used by a system. <strong>District heating and cooling</strong> describes how thermal energy is distributed among multiple buildings. A district system may use geothermal energy, wastewater, waste heat, or another source; these terms answer different questions about the same project.
+          </p>
         </motion.div>
 
       </div>

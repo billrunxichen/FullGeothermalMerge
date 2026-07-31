@@ -88,7 +88,7 @@ export function SiteSelection() {
             <h3 className="text-3xl font-bold text-slate-800">A First Look: Site Selection</h3>
           </div>
           <p className="text-lg text-slate-600 italic">
-            Key Questions: What makes a good site for geothermal energy?
+            Key Questions: What makes a good site for a geothermal energy network or thermal energy network?
           </p>
         </motion.div>
 
@@ -237,18 +237,16 @@ export function SiteSelection() {
             })}
           </div>
 
-          {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1602410085718-e0d9dc54418e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwcGxhbm5pbmclMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzcwMDE1NzAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-              alt="City planning"
-              className="w-full h-64 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end">
-              <div className="p-6 text-white">
-                <h5 className="font-bold text-xl mb-2">Map Your Community</h5>
-                <p className="text-slate-200">
-                  Identify these building types in your community and assess their potential as network nodes
+          <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 via-white to-blue-50 p-6 shadow-sm">
+            <div className="flex items-start gap-4">
+              <div className="rounded-xl bg-emerald-600 p-3 text-white shadow-sm">
+                <MapPin className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <div>
+                <h5 className="font-bold text-xl text-slate-800">Community-scale site selection</h5>
+                <p className="mt-2 text-slate-700 leading-relaxed">
+                  A promising network site is usually a connected group of buildings, not a single parcel. Available land,
+                  street access, nearby demand, and local thermal resources shape the opportunity together.
                 </p>
               </div>
             </div>

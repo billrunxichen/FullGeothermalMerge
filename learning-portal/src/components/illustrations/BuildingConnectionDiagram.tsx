@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 const buildings = [
   { x: 60, label: 'House', w: 50, h: 50 },
@@ -7,23 +7,36 @@ const buildings = [
 ];
 
 export function BuildingConnectionDiagram() {
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimate = shouldReduceMotion === false;
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg">
-      <h4 className="text-xl font-bold text-slate-800">How buildings connect to the district network</h4>
+      <h4 className="text-xl font-bold text-slate-800">How buildings connect to the network</h4>
       <p className="mt-2 text-sm text-slate-600">
         Each connected building needs a building-side interface, interior equipment, and a connection point down to the shared network main.
       </p>
 
       <div className="mt-6 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 p-4 ring-1 ring-slate-200/70">
-        <svg viewBox="0 0 400 240" className="aspect-[400/240] w-full">
+        <svg
+          viewBox="0 0 400 240"
+          className="aspect-[400/240] w-full"
+          role="img"
+          aria-labelledby="building-connection-diagram-title building-connection-diagram-description"
+        >
+          <title id="building-connection-diagram-title">Building heat pump connections to a shared thermal network</title>
+          <desc id="building-connection-diagram-description">
+            A house, office, and school each connect through a heat pump to a district network main. When motion is enabled,
+            the network, buildings, and their connections reveal in sequence.
+          </desc>
           <motion.rect
             x="0"
             y="190"
             width="400"
             height="50"
             fill="#e2e8f0"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={shouldAnimate ? { opacity: 0 } : false}
+            whileInView={shouldAnimate ? { opacity: 1 } : undefined}
             viewport={{ once: true }}
           />
           <motion.line
@@ -34,8 +47,8 @@ export function BuildingConnectionDiagram() {
             stroke="#2563eb"
             strokeWidth="4"
             strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
+            initial={shouldAnimate ? { pathLength: 0 } : false}
+            whileInView={shouldAnimate ? { pathLength: 1 } : undefined}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           />
@@ -46,8 +59,8 @@ export function BuildingConnectionDiagram() {
           {buildings.map((building, index) => (
             <motion.g
               key={building.label}
-              initial={{ opacity: 0, y: -16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={shouldAnimate ? { opacity: 0, y: -16 } : false}
+              whileInView={shouldAnimate ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: true }}
               transition={{ delay: 0.2 + index * 0.14 }}
             >
@@ -83,7 +96,7 @@ export function BuildingConnectionDiagram() {
                 strokeWidth="1"
               />
               <text x={building.x + building.w / 2} y="155" textAnchor="middle" fontSize="5" fill="#2563eb">
-                HX
+                HP
               </text>
 
               <motion.line
@@ -93,8 +106,8 @@ export function BuildingConnectionDiagram() {
                 y2="145"
                 stroke="#93c5fd"
                 strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
+                initial={shouldAnimate ? { pathLength: 0 } : false}
+                whileInView={shouldAnimate ? { pathLength: 1 } : undefined}
                 viewport={{ once: true }}
                 transition={{ delay: 0.45 + index * 0.15, duration: 0.35 }}
               />
@@ -106,27 +119,29 @@ export function BuildingConnectionDiagram() {
                 stroke="#2563eb"
                 strokeWidth="2"
                 strokeDasharray="4 3"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
+                initial={shouldAnimate ? { pathLength: 0 } : false}
+                whileInView={shouldAnimate ? { pathLength: 1 } : undefined}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 + index * 0.15, duration: 0.45 }}
               />
 
-              {[0, 1].map((particle) => (
+              {shouldAnimate && (
                 <motion.circle
-                  key={`${building.label}-${particle}`}
+                  aria-hidden="true"
                   r="3"
                   fill="#f97316"
-                  animate={{ cy: [205, 155, 205], opacity: [0, 1, 0] }}
-                  transition={{ duration: 3, delay: index * 0.5 + particle * 1.5, repeat: Infinity }}
                   cx={building.x + building.w / 2}
+                  initial={{ cy: 205, opacity: 0 }}
+                  whileInView={{ cy: 164, opacity: [0, 1, 0] }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ duration: 1.25, delay: 0.9 + index * 0.22, ease: 'easeInOut' }}
                 />
-              ))}
+              )}
             </motion.g>
           ))}
 
           <text x="200" y="176" textAnchor="middle" fontSize="8" fill="#64748b">
-            Heat exchangers link each building to the shared network
+            Heat pumps link each building to the shared network
           </text>
         </svg>
       </div>

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { FileText, MapPin, DollarSign, TrendingUp, Layers, Zap } from 'lucide-react';
+import { FileText, MapPin, DollarSign, TrendingUp, Layers, Thermometer, Zap } from 'lucide-react';
 import { ScopingStudyProcessDiagram } from './illustrations/ScopingStudyProcessDiagram';
 
 export function ScopingStudies() {
@@ -22,6 +22,14 @@ export function ScopingStudies() {
       description: 'Current and projected heating/cooling needs',
       details: 'Analyzes building energy consumption patterns, peak loads, and seasonal variations to size the geothermal system appropriately.',
       color: 'from-blue-400 to-cyan-500'
+    },
+    {
+      id: 'thermal-resources',
+      icon: Thermometer,
+      title: 'Local Thermal Resources',
+      description: 'Wastewater, ventilation, and commercial or industrial waste heat',
+      details: 'Identifies nearby sources and sinks of thermal energy, including wastewater, ventilation exhaust, and commercial or industrial waste heat, that can complement geothermal storage and improve network performance.',
+      color: 'from-rose-400 to-orange-500'
     },
     {
       id: 'network',
@@ -59,6 +67,7 @@ export function ScopingStudies() {
 
   const questions = [
     'What is the total heating and cooling demand of potential network buildings?',
+    'What local thermal resources can be leveraged?',
     'What are the geological conditions and available land for drilling?',
     'What is the optimal network layout to connect all buildings efficiently?',
     'What equipment is needed and at what scale?',

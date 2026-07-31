@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DollarSign, Building2, Users, Landmark, TrendingDown, FileText } from 'lucide-react';
 import { chapter1Quiz } from '../data/quizzes';
 import { QuizSection } from './QuizSection';
-import { FundingMixChart } from './illustrations/FundingMixChart';
+import { FundingCaseStudy } from './illustrations/FundingCaseStudy';
 
 export function Costs() {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
@@ -83,7 +83,7 @@ export function Costs() {
     {
       icon: DollarSign,
       title: 'Financing Model',
-      description: 'Ownership structure impacts how costs are distributed'
+      description: 'Ownership affects eligible capital, cost recovery, and how risks are shared'
     }
   ];
 
@@ -155,7 +155,7 @@ export function Costs() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <FundingMixChart />
+          <FundingCaseStudy />
         </motion.div>
 
         {/* Ownership Models */}
@@ -166,7 +166,10 @@ export function Costs() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h3 className="text-2xl font-bold text-slate-800 mb-6">Financing & Ownership Models</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-3">Financing & Ownership Models</h3>
+          <p className="mb-6 max-w-4xl text-slate-600 leading-relaxed">
+            Ownership and financing are linked: the organization that owns the system determines who can borrow, who carries construction and operating risk, and how investment may be recovered through rates, public revenue, member contributions, or other mechanisms.
+          </p>
           
           <div className="grid md:grid-cols-3 gap-6">
             {ownershipModels.map((model, index) => {

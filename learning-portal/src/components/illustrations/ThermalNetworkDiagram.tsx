@@ -1,116 +1,99 @@
-import { motion } from 'motion/react';
-import { Building2, Factory, Home, Store } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+
+const connectedBuildings = [
+  { x: 282, label: 'Homes', accent: '#60a5fa' },
+  { x: 428, label: 'Public building', accent: '#a78bfa' },
+  { x: 574, label: 'Shops & offices', accent: '#34d399' },
+];
 
 export function ThermalNetworkDiagram() {
-  const buildings = [
-    { id: 'source', icon: Factory, label: 'Shared plant', x: 44, y: 34, color: 'text-orange-600' },
-    { id: 'home1', icon: Home, label: 'Homes', x: 198, y: 18, color: 'text-blue-600' },
-    { id: 'office', icon: Building2, label: 'Offices', x: 314, y: 50, color: 'text-blue-600' },
-    { id: 'store', icon: Store, label: 'Stores', x: 252, y: 124, color: 'text-blue-600' },
-    { id: 'home2', icon: Home, label: 'Apartments', x: 110, y: 132, color: 'text-blue-600' },
-  ];
-
-  const pipes = [
-    'M 76 66 Q 140 28 198 46',
-    'M 76 66 Q 92 102 140 144',
-    'M 224 48 Q 268 32 320 72',
-    'M 344 82 Q 324 106 284 134',
-    'M 258 152 Q 204 162 162 150',
-    'M 116 152 Q 70 128 62 88',
-  ];
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimate = shouldReduceMotion === false;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-blue-50 p-6 shadow-lg">
-      <div className="mb-4 flex items-end justify-between gap-4">
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg">
+      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h4 className="text-xl font-bold text-slate-800">How a shared thermal network connects buildings</h4>
-          <p className="text-sm text-slate-600">
-            Energy moves through buried pipes so connected buildings can share heating and cooling resources.
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-700">One centralized example</p>
+          <h4 className="mt-1 text-xl font-bold text-slate-800">One plant serves several buildings</h4>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+            Hot water leaves the central source, serves connected buildings, and returns cooler to be heated again.
           </p>
         </div>
-        <div className="hidden rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 md:block">
-          Network concept
-        </div>
+        <span className="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">Follow the two dots</span>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white">
-        <div className="absolute bottom-0 left-0 right-0 h-8 border-t border-emerald-200 bg-emerald-100/70" />
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3">
+        <svg
+          viewBox="0 0 680 260"
+          className="h-auto w-full"
+          role="img"
+          aria-labelledby="central-network-title central-network-description"
+        >
+          <title id="central-network-title">Centralized district heating flow</title>
+          <desc id="central-network-description">
+            A central heat source supplies three building types along a hot-water line. A separate line returns cooler water to the source.
+          </desc>
+          <rect width="680" height="260" rx="16" fill="#f8fafc" />
 
-        <svg className="h-72 w-full" viewBox="0 0 400 200" preserveAspectRatio="none">
-          {pipes.map((path, index) => (
-            <g key={path}>
-              <motion.path
-                d={path}
-                stroke="#cbd5e1"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: index * 0.08 }}
-              />
-              <motion.path
-                d={path}
-                stroke="#93c5fd"
-                strokeWidth="4"
-                fill="none"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: index * 0.08 + 0.1 }}
-              />
+          <path d="M153 96 H611" fill="none" stroke="#f97316" strokeWidth="12" strokeLinecap="round" />
+          <path d="M611 177 H153" fill="none" stroke="#2563eb" strokeWidth="12" strokeLinecap="round" />
+          <text x="382" y="77" textAnchor="middle" fontSize="12" fontWeight="700" fill="#9a3412">hot supply</text>
+          <text x="382" y="205" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1d4ed8">cooler return</text>
+
+          <g>
+            <rect x="29" y="58" width="124" height="139" rx="15" fill="#ffffff" stroke="#fb923c" strokeWidth="3" />
+            <rect x="48" y="102" width="86" height="64" rx="6" fill="#ffedd5" stroke="#fb923c" strokeWidth="2" />
+            <path d="M60 102 V79 H78 V102 M102 102 V69 H120 V102" fill="none" stroke="#64748b" strokeWidth="8" strokeLinecap="round" />
+            <circle cx="91" cy="133" r="14" fill="#fed7aa" stroke="#f97316" strokeWidth="2" />
+            <text x="91" y="179" textAnchor="middle" fontSize="13" fontWeight="700" fill="#0f172a">Central plant</text>
+            <text x="91" y="220" textAnchor="middle" fontSize="11" fill="#475569">produces hot water</text>
+          </g>
+
+          {connectedBuildings.map((building) => (
+            <g key={building.label}>
+              <path d={`M${building.x} 96 V123 M${building.x} 158 V177`} fill="none" stroke="#94a3b8" strokeWidth="7" strokeLinecap="round" />
+              <rect x={building.x - 39} y="122" width="78" height="37" rx="8" fill="#ffffff" stroke={building.accent} strokeWidth="2" />
+              <rect x={building.x - 26} y="132" width="16" height="16" rx="3" fill="#e0f2fe" />
+              <rect x={building.x + 7} y="132" width="16" height="16" rx="3" fill="#e0f2fe" />
+              <text x={building.x} y="230" textAnchor="middle" fontSize="11" fontWeight="700" fill="#334155">{building.label}</text>
             </g>
           ))}
 
-          {pipes.map((path, pipeIndex) =>
-            [0, 1].map((particleIndex) => (
+          {shouldAnimate ? (
+            <g aria-hidden="true">
               <motion.circle
-                key={`${pipeIndex}-${particleIndex}`}
-                r="3"
-                fill={pipeIndex === 0 || pipeIndex === 5 ? '#f97316' : '#06b6d4'}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 1, 0], offsetDistance: ['0%', '100%'] }}
-                transition={{ duration: 3, delay: pipeIndex * 0.25 + particleIndex, repeat: Infinity, ease: 'linear' }}
-                style={{ offsetPath: `path('${path}')` }}
+                cy="96"
+                r="6"
+                fill="#fff7ed"
+                stroke="#ea580c"
+                strokeWidth="2"
+                initial={{ cx: 160, opacity: 0 }}
+                animate={{ cx: [160, 604], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 3.4, repeat: Infinity, repeatDelay: 0.7, ease: 'linear' }}
               />
-            ))
+              <motion.circle
+                cy="177"
+                r="6"
+                fill="#ecfeff"
+                stroke="#2563eb"
+                strokeWidth="2"
+                initial={{ cx: 604, opacity: 0 }}
+                animate={{ cx: [604, 160], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 3.4, delay: 1.1, repeat: Infinity, repeatDelay: 0.7, ease: 'linear' }}
+              />
+            </g>
+          ) : (
+            <g aria-hidden="true">
+              <circle cx="160" cy="96" r="6" fill="#fff7ed" stroke="#ea580c" strokeWidth="2" />
+              <circle cx="604" cy="177" r="6" fill="#ecfeff" stroke="#2563eb" strokeWidth="2" />
+            </g>
           )}
         </svg>
+      </div>
 
-        {buildings.map((building, index) => (
-          <motion.div
-            key={building.id}
-            className="absolute"
-            style={{ left: `${(building.x / 400) * 100}%`, top: `${(building.y / 200) * 100}%` }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: index * 0.08 }}
-          >
-            <div className="relative">
-              <div className={`flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm ${building.color}`}>
-                <building.icon className="h-6 w-6" />
-              </div>
-              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-medium text-slate-500">
-                {building.label}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-
-        <div className="absolute bottom-10 right-4 rounded-xl bg-white/95 px-3 py-2 shadow ring-1 ring-slate-200">
-          <div className="text-xs font-semibold text-slate-700">Flow legend</div>
-          <div className="mt-2 flex items-center gap-2 text-xs text-slate-600">
-            <span className="h-3 w-3 rounded-full bg-orange-500" />
-            Hot supply
-          </div>
-          <div className="mt-1 flex items-center gap-2 text-xs text-slate-600">
-            <span className="h-3 w-3 rounded-full bg-cyan-500" />
-            Cooler return
-          </div>
-        </div>
+      <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-relaxed text-emerald-950">
+        <strong>How this differs from a GEN or TEN:</strong> this is a central-source example. A decentralized network can exchange low-temperature heat between buildings, boreholes, and other thermal resources.
       </div>
     </div>
   );

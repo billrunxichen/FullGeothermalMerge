@@ -146,15 +146,16 @@ export function IndividualHomeHeating() {
           <div className="rounded-2xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-blue-50 p-8 shadow-xl">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <h3 className="text-2xl font-bold text-slate-800">Ground-source heat pump in motion</h3>
+                <h3 className="text-2xl font-bold text-slate-800">Follow the heat, season by season</h3>
                 <p className="mt-2 max-w-2xl text-slate-600">
-                  This diagram matches the portal’s home-heating section and shows how a building exchanges energy with stable underground temperatures in different seasons.
+                  A ground-source heat pump reverses the direction of heat flow with the season. Choose a season to see where heat begins, where it goes, and what the heat pump does.
                 </p>
               </div>
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setHeatPumpMode('heating')}
+                  aria-pressed={heatPumpMode === 'heating'}
                   className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                     heatPumpMode === 'heating'
                       ? 'bg-orange-500 text-white shadow-md'
@@ -166,6 +167,7 @@ export function IndividualHomeHeating() {
                 <button
                   type="button"
                   onClick={() => setHeatPumpMode('cooling')}
+                  aria-pressed={heatPumpMode === 'cooling'}
                   className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                     heatPumpMode === 'cooling'
                       ? 'bg-cyan-500 text-white shadow-md'
@@ -178,6 +180,18 @@ export function IndividualHomeHeating() {
             </div>
 
             <HeatPumpDiagram mode={heatPumpMode} />
+            <p className="mt-5 text-sm leading-relaxed text-slate-600">
+              This original diagram follows the same seasonal principle illustrated by the{' '}
+              <a
+                href="https://www.energy.gov/hgeo/geothermal/geothermal-heat-pumps"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-2 hover:text-blue-900"
+              >
+                U.S. Department of Energy’s geothermal heat-pump overview
+              </a>
+              .
+            </p>
           </div>
         </motion.div>
 

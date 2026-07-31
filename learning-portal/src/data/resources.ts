@@ -45,11 +45,11 @@ export const resourceCards: ResourceCard[] = [
   },
   {
     id: 'doe-ground-source-heat-pumps',
-    title: 'DOE Ground-Source Heat Pumps',
-    description: 'Department of Energy flyer explaining ground-source heat pump technology.',
+    title: 'DOE Geothermal Heat Pumps',
+    description: 'U.S. Department of Energy overview of how geothermal heat pumps move heat in winter and summer.',
     type: 'fact-sheet',
-    thumbnail: 'https://drive.google.com/thumbnail?id=1_79OOgG7aGgZbS4roTv8j2y-AR95LXnk&sz=w800',
-    url: 'https://drive.google.com/file/d/1_79OOgG7aGgZbS4roTv8j2y-AR95LXnk/view',
+    thumbnail: '',
+    url: 'https://www.energy.gov/hgeo/geothermal/geothermal-heat-pumps',
     section: '1.2',
   },
   {
@@ -206,9 +206,9 @@ export const resourceCards: ResourceCard[] = [
     section: '1.5',
   },
   {
-    id: 'nyserda-district-energy',
-    title: 'NYSERDA District Energy',
-    description: 'Report on ownership and investment models.',
+    id: 'district-energy-in-cities',
+    title: 'District Energy in Cities',
+    description: 'Report with documented ownership and finance case studies, including Vancouver SEFC NEU.',
     type: 'report',
     thumbnail: 'https://drive.google.com/thumbnail?id=18tNzpeYsLNEtzXVrOmgvJSCbm21CWrKK&sz=w800',
     url: 'https://drive.google.com/file/d/18tNzpeYsLNEtzXVrOmgvJSCbm21CWrKK/view',
