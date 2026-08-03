@@ -41,9 +41,13 @@ export function HeatPumpDiagram({ mode = 'heating' }: HeatPumpDiagramProps) {
             Follow one heat packet as it moves through the system. The equipment stays the same; only the direction changes.
           </p>
         </div>
-        <span className="w-fit rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: accentPale, color: accent }}>
-          {route}
-        </span>
+        <div
+          className="w-fit rounded-lg border px-3 py-2 text-left"
+          style={{ alignSelf: 'flex-end', backgroundColor: accentPale, borderColor: accent }}
+        >
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: accent }}>Heat route</p>
+          <p className="mt-0.5 text-sm font-medium leading-5 text-slate-700">{route}</p>
+        </div>
       </div>
 
       <div className="border-t border-slate-200 bg-slate-50 px-3 py-4 sm:px-6 sm:py-6">
