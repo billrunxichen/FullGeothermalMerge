@@ -139,15 +139,18 @@ export function SiteSelectionDiagram() {
           </motion.g>
 
           <g>
-            <rect x="22" y="206" width="142" height="52" rx="10" fill="#ffffff" stroke="#99f6e4" strokeWidth="1.5" />
-            <text x="93" y="228" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f766e">Site conditions</text>
-            <text x="93" y="246" textAnchor="middle" fontSize="10" fill="#475569">land, access, and geology</text>
+            <rect x="14" y="206" width="160" height="58" rx="10" fill="#ffffff" stroke="#99f6e4" strokeWidth="1.5" />
+            <text x="94" y="228" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f766e">Site conditions</text>
+            <text x="94" y="246" textAnchor="middle" fontSize="10" fill="#475569">land, access, and geology</text>
           </g>
 
           <g>
-            <rect x="396" y="206" width="142" height="52" rx="10" fill="#ffffff" stroke="#bfdbfe" strokeWidth="1.5" />
-            <text x="467" y="228" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1d4ed8">Thermal resources</text>
-            <text x="467" y="246" textAnchor="middle" fontSize="10" fill="#475569">wastewater, ventilation, waste heat</text>
+            <rect x="388" y="206" width="160" height="58" rx="10" fill="#ffffff" stroke="#bfdbfe" strokeWidth="1.5" />
+            <text x="468" y="226" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1d4ed8">Thermal resources</text>
+            <text x="468" y="242" textAnchor="middle" fontSize="10" fill="#475569">
+              <tspan x="468" dy="0">wastewater, ventilation,</tspan>
+              <tspan x="468" dy="13">waste heat</tspan>
+            </text>
           </g>
         </svg>
       </div>

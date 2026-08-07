@@ -1,12 +1,39 @@
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import { motion, useInView, useReducedMotion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import { Home, Wind, Droplets, Waves, ArrowDownUp, ThermometerSun } from 'lucide-react';
 import { HeatPumpDiagram } from './illustrations/HeatPumpDiagram';
+import {
+  GeothermalHeatPumpScene,
+  type GeothermalSeason,
+} from './illustrations/GeothermalHeatPumpScene';
 
 export function IndividualHomeHeating() {
   const [hoveredPump, setHoveredPump] = useState<string | null>(null);
   const [showHVAC, setShowHVAC] = useState(false);
   const [heatPumpMode, setHeatPumpMode] = useState<'heating' | 'cooling'>('heating');
+
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const sceneInView = useInView(sceneRef, { amount: 0.3 });
+  const sceneReduceMotion = useReducedMotion();
+  const [sceneSeason, setSceneSeason] = useState<GeothermalSeason>('winter');
+  const [sceneAutoPlaying, setSceneAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!sceneAutoPlaying || !sceneInView || sceneReduceMotion !== false) {
+      return;
+    }
+    // 4s hold + 0.7s wipe.
+    const timer = window.setInterval(() => {
+      setSceneSeason((current) => (current === 'winter' ? 'summer' : 'winter'));
+    }, 4700);
+    return () => window.clearInterval(timer);
+  }, [sceneAutoPlaying, sceneInView, sceneReduceMotion]);
+
+  const handleSceneSeasonChange = (next: GeothermalSeason) => {
+    // A reader taking control stops the cycle; the animation must not fight them.
+    setSceneAutoPlaying(false);
+    setSceneSeason(next);
+  };
 
   const heatPumps = [
     {
@@ -137,6 +164,29 @@ export function IndividualHomeHeating() {
         </motion.div>
 
         <motion.div
+          ref={sceneRef}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <h3 className="mb-2 text-center text-2xl font-bold text-slate-800">
+            A geothermal heat pump through the year
+          </h3>
+          <p className="mx-auto mb-6 max-w-2xl text-center text-slate-600">
+            The same loop of pipe serves the house all year. Only the direction the heat travels
+            changes.
+          </p>
+          <GeothermalHeatPumpScene
+            season={sceneSeason}
+            onSeasonChange={handleSceneSeasonChange}
+            isAutoPlaying={sceneAutoPlaying}
+            onAutoPlayToggle={() => setSceneAutoPlaying((playing) => !playing)}
+          />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -181,7 +231,7 @@ export function IndividualHomeHeating() {
 
             <HeatPumpDiagram mode={heatPumpMode} />
             <p className="mt-5 text-sm leading-relaxed text-slate-600">
-              This original diagram follows the same seasonal principle illustrated by the{' '}
+              These original diagrams follow the same seasonal principle illustrated by the{' '}
               <a
                 href="https://www.energy.gov/hgeo/geothermal/geothermal-heat-pumps"
                 target="_blank"
