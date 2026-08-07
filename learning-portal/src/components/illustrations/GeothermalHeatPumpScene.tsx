@@ -355,7 +355,9 @@ export function GeothermalHeatPumpScene({
   const outgoingConfig = outgoingSeason ? SEASONS[outgoingSeason] : null;
 
   return (
-    <figure className="mx-auto w-full max-w-[640px]">
+    // src/index.css is a precompiled Tailwind build, so arbitrary utilities like
+    // max-w-[340px] do not exist. Width is set inline for that reason.
+    <figure className="mx-auto w-full" style={{ maxWidth: '340px' }}>
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
         <svg
           viewBox="0 0 460 470"
@@ -452,37 +454,38 @@ export function GeothermalHeatPumpScene({
             animate={canAnimate}
           />
 
-          <path d="M264 232 H254" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
-          <text x="268" y="236" fontSize="11" fontWeight="700" fill="#ffffff">
+          {/* Label sizes are tuned for the ~340px rendered width: the SVG scales to about
+              0.74, so these land near 12-13px on screen. */}
+          <path d="M264 233 H254" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+          <text x="269" y="239" fontSize="17" fontWeight="700" fill="#ffffff">
             Ground loop
           </text>
-          <text x="26" y="278" fontSize="11" fontWeight="600" fill="#ffffff">
-            50–59°F (10–15°C) year-round
+          <text x="24" y="272" fontSize="16.5" fontWeight="600" fill="#ffffff">
+            50–59°F (10–15°C)
+          </text>
+          <text x="24" y="292" fontSize="16.5" fontWeight="600" fill="#ffffff">
+            year-round
           </text>
 
-          <rect x="14" y="14" width="192" height="34" rx="10" fill="#ffffff" opacity="0.95" />
-          <text x="26" y="36" fontSize="15" fontWeight="700" fill="#0f172a">
-            Geothermal Heat Pump
-          </text>
-
+          {/* Pill is sized for the longer of the two badges, "SUMMER · COOLING". */}
           <rect
-            x="272"
-            y="14"
-            width="174"
-            height="30"
-            rx="15"
+            x="248"
+            y="12"
+            width="200"
+            height="34"
+            rx="17"
             fill="#ffffff"
             opacity="0.95"
             stroke={config.accent}
-            strokeWidth="1.5"
+            strokeWidth="2"
           />
-          <circle cx="291" cy="29" r="6" fill={config.accent} />
-          <text x="304" y="33" fontSize="11" fontWeight="700" fill={config.accent}>
+          <circle cx="268" cy="29" r="8" fill={config.accent} />
+          <text x="348" y="35" textAnchor="middle" fontSize="15" fontWeight="700" fill={config.accent}>
             {config.badge}
           </text>
 
-          <rect x="182" y="140" width="76" height="20" rx="6" fill="#ffffff" opacity="0.92" />
-          <text x="220" y="154" textAnchor="middle" fontSize="10" fontWeight="700" fill="#0f172a">
+          <rect x="180" y="143" width="100" height="26" rx="8" fill="#ffffff" opacity="0.94" />
+          <text x="230" y="161" textAnchor="middle" fontSize="16.5" fontWeight="700" fill="#0f172a">
             Heat pump
           </text>
         </svg>
@@ -493,35 +496,33 @@ export function GeothermalHeatPumpScene({
           <button
             type="button"
             onClick={onAutoPlayToggle}
-            className="rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+            className="rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white transition"
           >
             {isAutoPlaying ? 'Pause' : 'Play'}
           </button>
         )}
-        <button
-          type="button"
-          onClick={() => onSeasonChange('winter')}
-          aria-pressed={season === 'winter'}
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-            season === 'winter'
-              ? 'bg-sky-600 text-white shadow-md'
-              : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-sky-50'
-          }`}
-        >
-          Winter heating
-        </button>
-        <button
-          type="button"
-          onClick={() => onSeasonChange('summer')}
-          aria-pressed={season === 'summer'}
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-            season === 'summer'
-              ? 'bg-amber-600 text-white shadow-md'
-              : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-amber-50'
-          }`}
-        >
-          Summer cooling
-        </button>
+        {(['winter', 'summer'] as GeothermalSeason[]).map((option) => {
+          const isActive = season === option;
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onSeasonChange(option)}
+              aria-pressed={isActive}
+              // Short visible label keeps all three controls on one row at 340px; the full
+              // phrase stays available to screen readers.
+              aria-label={option === 'winter' ? 'Winter heating' : 'Summer cooling'}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                isActive ? 'text-white shadow-md' : 'bg-white text-slate-700 ring-1 ring-slate-200'
+              }`}
+              // Accent comes from the season config rather than a utility class, since the
+              // precompiled stylesheet has no bg-sky-600 / bg-amber-600.
+              style={isActive ? { backgroundColor: SEASONS[option].accent } : undefined}
+            >
+              {option === 'winter' ? 'Winter' : 'Summer'}
+            </button>
+          );
+        })}
       </div>
 
       <figcaption className="mt-3 text-center text-sm leading-relaxed text-slate-600">
